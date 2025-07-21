@@ -153,42 +153,32 @@ install_bot_dependencies() {
     print_message "Bot dependencies installed!"
 }
 
-# Generate session ID automatically
-generate_session_id() {
-    print_message "🔑 WhatsApp Session ID Generation"
+# Get session ID from user
+get_session_id() {
+    print_message "🔑 WhatsApp Session ID Configuration"
     echo
-    print_info "To connect your bot to WhatsApp, we need to generate a session ID."
-    print_info "This requires your phone number and a pairing code."
+    print_info "To connect your bot to WhatsApp, you need a session ID."
+    print_info "Generate it using: https://levanter.up.railway.app/"
+    echo
+    print_info "Instructions:"
+    print_info "1. Visit: https://levanter.up.railway.app/"
+    print_info "2. Enter your phone number"
+    print_info "3. Follow the pairing instructions"
+    print_info "4. Copy the generated session ID"
     echo
     
-    while [ -z "$PHONE_NUMBER" ]; do
-        read -p "📱 Enter your WhatsApp phone number (with country code, no + sign): " PHONE_NUMBER
-        if [ -z "$PHONE_NUMBER" ]; then
-            print_error "Phone number is required!"
-        elif [ ${#PHONE_NUMBER} -lt 10 ]; then
-            print_error "Please include country code (e.g., 237670217260)"
-            PHONE_NUMBER=""
+    while [ -z "$SESSION_ID" ]; do
+        read -p "� Paste your session ID here: " SESSION_ID
+        if [ -z "$SESSION_ID" ]; then
+            print_error "Session ID is required!"
+        elif [ ${#SESSION_ID} -lt 20 ]; then
+            print_error "Session ID seems too short. Please check and try again."
+            SESSION_ID=""
         fi
     done
     
-    print_message "📞 Generating pairing code for +$PHONE_NUMBER..."
-    print_info "⏳ Please wait..."
-    echo
-    
-    # Run the pairing code generator
-    print_message "🚀 Starting WhatsApp pairing process..."
-    node pairing-code.js "$PHONE_NUMBER"
-    
-    # Check if session was generated
-    if [ -f "session_id.txt" ]; then
-        SESSION_ID=$(cat session_id.txt)
-        print_message "✅ Session ID generated successfully!"
-        rm -f session_id.txt  # Clean up
-        return 0
-    else
-        print_error "❌ Failed to generate session ID. Please try again."
-        return 1
-    fi
+    print_message "✅ Session ID received!"
+    return 0
 }
 
 # Configure environment
@@ -209,9 +199,14 @@ configure_environment() {
     print_info "🎯 KENTECH MULTIBOT Configuration"
     echo
     
-    # Generate session ID automatically
-    if ! generate_session_id; then
-        print_error "Session generation failed. Deployment cannot continue."
+    # Get bot name
+    read -p "Enter your bot name [KENTECH MULTIBOT]: " BOT_NAME
+    BOT_NAME=${BOT_NAME:-"KENTECH MULTIBOT"}
+    print_message "Bot name: $BOT_NAME"
+    
+    # Get session ID from user
+    if ! get_session_id; then
+        print_error "Session configuration failed. Deployment cannot continue."
         exit 1
     fi
     
@@ -325,6 +320,7 @@ display_final_info() {
     echo
     print_message "🎉 KENTECH MULTIBOT deployed successfully!"
     echo
+    print_info "Bot Name: $BOT_NAME"
     print_info "Bot installed in: $INSTALL_DIR"
     print_info "Configuration file: $INSTALL_DIR/config.env"
     echo
@@ -333,11 +329,11 @@ display_final_info() {
     echo "  • View bot logs: pm2 logs kentech-multibot"
     echo "  • Restart bot: pm2 restart kentech-multibot"
     echo "  • Stop bot: pm2 stop kentech-multibot"
-    echo "  • Update bot: git pull && yarn install && pm2 restart kentech-multibot"
+    echo "  • Update bot: git pull && npm install && pm2 restart kentech-multibot"
     echo
     
     print_message "Session ID configured: ✅"
-    print_info "Your bot is ready to connect to WhatsApp!"
+    print_info "Your $BOT_NAME is ready and running!"
     echo
     print_info "Testing bot startup..."
     sleep 2
