@@ -16,18 +16,18 @@
                 <div style="margin: 20px 0;">
                     <div class="result-box" style="background: rgba(255, 107, 53, 0.2); border: 1px solid #FF6B35;">
                         <h3>👑 Your Admin Pairing Code:</h3>
-                        <div class="session-code code-display" style="color: #FF6B35;">KENTECH7260</div>
+                        <div class="session-code code-display" style="color: #FF6B35;">23767260</div>
                         <p><strong>Admin Instructions:</strong></p>
                         <ol style="margin-top: 10px; padding-left: 20px;">
                             <li>Open WhatsApp on your phone (+237670217260)</li>
                             <li>Go to Settings → Linked Devices</li>
                             <li>Tap "Link a Device"</li>
                             <li>Choose "Link with phone number instead"</li>
-                            <li>Enter code: <strong>KENTECH7260</strong></li>
+                            <li>Enter code: <strong>23767260</strong></li>
                             <li>You'll have full SUDO admin privileges</li>
                         </ol>
                         <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
-                            🔒 This code is permanent and gives you unremovable admin access to KENTECH MULTIBOT
+                            🔒 This 8-digit code is permanent and gives you unremovable admin access to KENTECH MULTIBOT
                         </p>
                         <button onclick="copyAdminCode()" class="deploy-btn" style="background: linear-gradient(45deg, #FF6B35, #FF8C42); margin-top: 15px;">
                             📋 Copy Admin Code
@@ -351,10 +351,10 @@
 
             <div class="option-card">
                 <span class="option-number">2</span>
-                <strong>Custom Pairing Code</strong> - Use your preferred code
+                <strong>Custom Pairing Code</strong> - Use your preferred 8-digit code
                 <br><br>
                 <div style="margin: 20px 0;">
-                    <input type="text" id="customCode" placeholder="Enter your preferred code (e.g., KENTECH123)" class="input-field">
+                    <input type="text" id="customCode" placeholder="Enter 8 digits (e.g., 12345678)" class="input-field" maxlength="8">
                     <br><br>
                     <button onclick="useCustomCode()" class="deploy-btn">
                         🎯 Use My Code
@@ -408,11 +408,12 @@
             <div class="info-box">
                 <h3>⚠️ Important Notes:</h3>
                 <ul style="margin-top: 10px; padding-left: 20px;">
-                    <li><strong>Pairing codes are temporary</strong> - use them within 5 minutes</li>
+                    <li><strong>Pairing codes are 8 digits</strong> - exactly like WhatsApp's format</li>
+                    <li><strong>Codes expire in 5 minutes</strong> - use them quickly</li>
                     <li><strong>One device per number</strong> - don't generate multiple sessions</li>
                     <li><strong>Keep your session private</strong> - it's like your password</li>
                     <li><strong>Your number +237670217260 is pre-configured</strong> as bot admin</li>
-                    <li><strong>Custom codes</strong> can be anything you prefer (letters/numbers)</li>
+                    <li><strong>Custom codes</strong> must be exactly 8 digits (numbers only)</li>
                 </ul>
             </div>
 
@@ -461,11 +462,11 @@
                 return;
             }
             
-            // Generate a pairing code (8 characters)
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            // Generate a pairing code (8 digits)
+            const digits = '0123456789';
             let pairingCode = '';
             for (let i = 0; i < 8; i++) {
-                pairingCode += chars.charAt(Math.floor(Math.random() * chars.length));
+                pairingCode += digits.charAt(Math.floor(Math.random() * digits.length));
             }
             
             // Display the pairing code
@@ -480,7 +481,7 @@
         // Use custom pairing code
         function useCustomCode() {
             const customInput = document.getElementById('customCode');
-            const customCode = customInput.value.trim().toUpperCase();
+            const customCode = customInput.value.trim();
             
             if (!customCode) {
                 alert('Please enter your preferred pairing code!');
@@ -488,9 +489,9 @@
                 return;
             }
             
-            // Validate custom code (alphanumeric, 4-12 characters)
-            if (!customCode.match(/^[A-Z0-9]{4,12}$/)) {
-                alert('Pairing code must be 4-12 characters long and contain only letters and numbers!');
+            // Validate custom code (8 digits only)
+            if (!customCode.match(/^\d{8}$/)) {
+                alert('Pairing code must be exactly 8 digits (numbers only)!');
                 customInput.focus();
                 return;
             }
@@ -506,11 +507,11 @@
         
         // Copy admin code to clipboard
         function copyAdminCode() {
-            const adminCode = 'KENTECH7260';
+            const adminCode = '23767260';
             
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(adminCode).then(() => {
-                    showCopySuccess('Admin code copied! Use it in WhatsApp to get SUDO privileges.');
+                    showCopySuccess('Admin code 23767260 copied! Use it in WhatsApp to get SUDO privileges.');
                 });
             } else {
                 // Fallback for older browsers
@@ -520,7 +521,7 @@
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                showCopySuccess('Admin code copied! Use it in WhatsApp to get SUDO privileges.');
+                showCopySuccess('Admin code 23767260 copied! Use it in WhatsApp to get SUDO privileges.');
             }
         }
         
@@ -590,9 +591,9 @@
                 }
             });
             
-            // Auto-format custom code
+            // Auto-format custom code (digits only)
             document.getElementById('customCode').addEventListener('input', function(e) {
-                e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
             });
         });
     </script>
