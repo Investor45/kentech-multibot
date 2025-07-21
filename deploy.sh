@@ -164,13 +164,30 @@ configure_environment() {
     print_info "Please configure your bot settings:"
     echo
     
-    # Get session ID
-    read -p "Enter your WhatsApp Session ID: " SESSION_ID
-    if [ -z "$SESSION_ID" ]; then
-        print_warning "No session ID provided. You can set it later in config.env"
-    else
-        sed -i "s/SESSION_ID=.*/SESSION_ID=$SESSION_ID/" config.env
-    fi
+    # Get session ID - MANDATORY
+    print_info "Session ID is REQUIRED for the bot to work!"
+    print_info "Get your session ID from: https://kentech-session-generator.vercel.app"
+    echo
+    
+    while [ -z "$SESSION_ID" ]; do
+        read -p "Enter your WhatsApp Session ID (REQUIRED): " SESSION_ID
+        if [ -z "$SESSION_ID" ]; then
+            print_error "Session ID cannot be empty! The bot will not work without it."
+            print_info "Please visit: https://kentech-session-generator.vercel.app"
+            print_info "Generate a session ID and enter it here."
+            echo
+        elif [ "$SESSION_ID" = "YOUR_ACTUAL_SESSION_ID_HERE" ] || [ "$SESSION_ID" = "kentech_multibot_sessionid" ]; then
+            print_error "Please enter a REAL session ID, not the placeholder!"
+            print_info "Visit: https://kentech-session-generator.vercel.app"
+            print_info "Scan the QR code with WhatsApp and get your actual session ID."
+            SESSION_ID=""
+            echo
+        fi
+    done
+    
+    sed -i "s/SESSION_ID=.*/SESSION_ID=$SESSION_ID/" config.env
+    print_message "Session ID configured successfully!"
+    echo
     
     # Get bot prefix
     read -p "Enter bot prefix [.]: " PREFIX
@@ -286,10 +303,12 @@ display_final_info() {
     echo "  • Update bot: git pull && yarn install && pm2 restart kentech-multibot"
     echo
     
-    if [ -z "$SESSION_ID" ]; then
-        print_warning "Remember to set your SESSION_ID in config.env and restart the bot!"
-        print_info "Generate session ID at: https://kentech-session-generator.vercel.app"
-    fi
+    print_message "Session ID configured: ✅"
+    print_info "Your bot is ready to connect to WhatsApp!"
+    echo
+    print_info "Testing bot startup..."
+    sleep 2
+    pm2 logs kentech-multibot --lines 10
     
     echo
     print_message "Join our community:"

@@ -10,6 +10,17 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/
 
 **This replaces any old deployment scripts and uses YOUR branded KENTECH MULTIBOT!**
 
+## ⚠️ IMPORTANT: Session ID Required
+
+**Before deploying, you MUST have a valid session ID:**
+
+1. 🚫 **Don't use placeholders** like `YOUR_ACTUAL_SESSION_ID_HERE`
+2. ✅ **Get real session ID** from [KENTECH Session Generator](https://kentech-session-generator.vercel.app)
+3. 📱 **Scan QR code** with WhatsApp Web
+4. 💾 **Copy the generated session ID**
+
+**Without a valid session ID, your bot will NOT work!**
+
 ---
 
 ## 🎯 What This Command Does
@@ -36,23 +47,30 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/
 
 ## 🔧 Deployment Process
 
-### Step 1: SSH to Your VPS
+### Step 1: Generate Session ID FIRST
+**⚠️ IMPORTANT: Get your session ID before running the deployment!**
+
+1. Visit: **[KENTECH Session Generator](https://kentech-session-generator.vercel.app)**
+2. Generate and copy your session ID
+3. Keep it ready - the deployment script will ask for it
+
+### Step 2: SSH to Your VPS
 ```bash
 ssh root@your-vps-ip
 # or
 ssh username@your-vps-ip
 ```
 
-### Step 2: Run the Deployment Command
+### Step 3: Run the Deployment Command
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/master/deploy.sh)
 ```
 
-### Step 3: Follow the Prompts
+### Step 4: Follow the Prompts
 The script will ask for:
+- **Session ID**: ⚠️ **REQUIRED** - Enter your real session ID (not placeholder)
 - **Repository URL**: `https://github.com/Investor45/kentech-multibot.git`
 - **Installation Directory**: `/home/username/kentech-multibot` (default)
-- **Session ID**: Get from your session generator
 - **Bot Prefix**: `.` (default)
 - **Admin Phone Numbers**: Your phone number with country code
 - **Bot Language**: `en` (default)
