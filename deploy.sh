@@ -158,10 +158,10 @@ get_session_id() {
     print_message "🔑 WhatsApp Session ID Configuration"
     echo
     print_info "To connect your bot to WhatsApp, you need a session ID."
-    print_info "Generate it using: https://levanter.up.railway.app/"
+    print_info "Generate it using: https://levanter-delta.vercel.app/"
     echo
     print_info "Instructions:"
-    print_info "1. Visit: https://levanter.up.railway.app/"
+    print_info "1. Visit: https://levanter-delta.vercel.app/"
     print_info "2. Enter your phone number"
     print_info "3. Follow the pairing instructions"
     print_info "4. Copy the generated session ID"
