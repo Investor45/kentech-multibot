@@ -52,15 +52,27 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/
 
 ### 1️⃣ Generate Session ID
 
-🔑 **Get your WhatsApp Session ID:** **[KENTECH Session Generator](https://kentech-session-generator.vercel.app)**
+🔑 **Get your WhatsApp Session ID using Pairing Code:**
 
-**📱 How to get your session:**
+**Option A: Pairing Code (Easiest)**
+```bash
+npm run pairing
+```
+1. Enter your phone number with country code (e.g., 237670217260)
+2. Get 8-digit pairing code
+3. Open WhatsApp → Settings → Linked Devices → Link a Device
+4. Tap "Link with phone number instead"
+5. Enter the 8-digit code
+6. Copy your session ID
 
-1. **Visit**: [https://kentech-session-generator.vercel.app](https://kentech-session-generator.vercel.app)
-2. **Choose deployment option** or **manual session generation**
-3. **For manual setup**: Run `node generate-session.js` in your server
-4. **Scan QR code** with WhatsApp (Settings → Linked Devices → Link a Device)
-5. **Copy your session ID** - keep it private and secure!
+**Option B: QR Code**
+```bash
+npm run qr
+```
+1. Scan QR code with WhatsApp
+2. Copy your session ID
+
+📖 **Detailed Guide**: [PAIRING-CODE-GUIDE.md](PAIRING-CODE-GUIDE.md)
 
 > ⚠️ **Important**: Your session ID is like a password - never share it publicly!
 
