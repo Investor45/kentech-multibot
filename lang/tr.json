@@ -11,7 +11,7 @@
     "reconnect": "[{0}] yeniden bağlanıyor...({1})",
     "reconnect_after": "[{0}] 1 dakika sonra yeniden bağlan",
     "another_login": "[{0}] oturum başka bir cihazda açıldı.",
-    "error_message": "```---HATA RAPORU---\n\nSürüm : {0}\nMesaj : {1}\nHata   : {2}\nJid     : {3}\nkomut : {4}\nPlatform : {5}```\n\n```-----``` *LyFE tarafından ❣ ile yapıldı* ```-----```",
+    "error_message": "```---HATA RAPORU---\n\nSürüm : {0}\nMesaj : {1}\nHata   : {2}\nJid     : {3}\nkomut : {4}\nPlatform : {5}```\n\n```-----``` *KENTECH Team tarafından ❣ ile yapıldı* ```-----```",
     "deleted_message": "           silinenMesaj",
     "install_external_plugin": "[{0}] Harici eklentiler yükleniyor...",
     "installed_external_plugin": "[{0}] Harici Eklentiler Yüklendi",

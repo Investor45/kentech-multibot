@@ -11,7 +11,7 @@
     "reconnect": "[{0}] Reconectando...({1})",
     "reconnect_after": "[{0}] Reconectar despues de 1 minuto",
     "another_login": "[{0}] La Sesion se ha iniciado en otro dispositivo.",
-    "error_message": "```---REPORTE DE ERROR---\n\nVersion : {0}\nMensaje : {1}\nError   : {2}\nJid     : {3}\nComando : {4}\nPlataforma : {5}```\n\n```-----``` *Hecho por LyFE con mucho Amor ❣* ```-----```",
+    "error_message": "```---REPORTE DE ERROR---\n\nVersion : {0}\nMensaje : {1}\nError   : {2}\nJid     : {3}\nComando : {4}\nPlataforma : {5}```\n\n```-----``` *Hecho por KENTECH Team con mucho Amor ❣* ```-----```",
     "deleted_message": "MensajeBorrado",
     "install_external_plugin": "[{0}] Instalando Plugins Externos...",
     "installed_external_plugin": "[{0}] Plugins Externos Instalados.",

@@ -11,7 +11,7 @@
     "reconnect": "[{0}] Reconnexion...({1})",
     "reconnect_after": "[{0}] Reconnexion après 1 minute",
     "another_login": "[{0}] Session connectée sur un autre appareil.",
-    "error_message": "```---RAPPORT D'ERREUR---\n\nVersion : {0}\nMessage : {1}\nErreur   : {2}\nJid     : {3}\nCommande : {4}\nPlateforme : {5}```\n\n```-----``` *Créé par LyFE avec ❣* ```-----```",
+    "error_message": "```---RAPPORT D'ERREUR---\n\nVersion : {0}\nMessage : {1}\nErreur   : {2}\nJid     : {3}\nCommande : {4}\nPlateforme : {5}```\n\n```-----``` *Créé par KENTECH Team avec ❣* ```-----```",
     "deleted_message": "           messageSupprimé",
     "install_external_plugin": "[{0}] Installation des plugins externes...",
     "installed_external_plugin": "[{0}] Plugins externes installés",

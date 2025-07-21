@@ -11,7 +11,7 @@
     "reconnect": "[{0}] Menghubungkan ulang...({1})",
     "reconnect_after": "[{0}] Menghubungkan ulang setelah 1 menit",
     "another_login": "[{0}] Sesi login di perangkat lain.",
-    "error_message": "```---LAPORAN ERROR---\n\nVersi : {0}\nPesan : {1}\nError   : {2}\nJid     : {3}\nPerintah : {4}\nPlatform : {5}```\n\n```-----``` *Dibuat oleh LyFE dengan ❣* ```-----```",
+    "error_message": "```---LAPORAN ERROR---\n\nVersi : {0}\nPesan : {1}\nError   : {2}\nJid     : {3}\nPerintah : {4}\nPlatform : {5}```\n\n```-----``` *Dibuat oleh KENTECH Team dengan ❣* ```-----```",
     "deleted_message": "           Pesan dihapus",
     "install_external_plugin": "[{0}] Menginstal plugin eksternal...",
     "installed_external_plugin": "[{0}] Plugin Eksternal Terinstal",

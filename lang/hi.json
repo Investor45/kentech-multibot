@@ -11,7 +11,7 @@
     "reconnect": "[{0}] Dobara connect kar raha hoon...({1})",
     "reconnect_after": "[{0}] 1 minute baad dobara connect karo",
     "another_login": "[{0}] Ye session kisi aur device pe login hai.",
-    "error_message": "```---ERROR REPORT---\n\nVersion : {0}\nMessage : {1}\nError   : {2}\nJid     : {3}\ncommand : {4}\nPlatform : {5}```\n\n```-----``` *LyFE ne banaya hai, pyaar se ❣* ```-----```",
+    "error_message": "```---ERROR REPORT---\n\nVersion : {0}\nMessage : {1}\nError   : {2}\nJid     : {3}\ncommand : {4}\nPlatform : {5}```\n\n```-----``` *KENTECH Team ne banaya hai, pyaar se ❣* ```-----```",
     "deleted_message": "           ye message delete ho gaya",
     "install_external_plugin": "[{0}] Bahari plugins install kar raha hoon...",
     "installed_external_plugin": "[{0}] Bahari plugins install ho gaye",
