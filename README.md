@@ -1,13 +1,13 @@
 # 🤖 KENTECH MULTIBOT
 
-[![Deploy](https://img.shields.io/badge/Deploy-Now-brightgreen)](https://kentech-session-generator.vercel.app)
+[![Deploy](https://img.shields.io/badge/Deploy-Now-brightgreen)](https://levanter-delta.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org)
-[![Session Generator](https://img.shields.io/badge/Get%20Session%20ID-Click%20Here-orange)](https://kentech-session-generator.vercel.app)
+[![Session Generator](https://img.shields.io/badge/Get%20Session%20ID-Click%20Here-orange)](https://levanter-delta.vercel.app)
 
 **KENTECH MULTIBOT** is a powerful and feature-rich WhatsApp bot built with Node.js and Baileys. It supports multiple sessions, customizable responses, and automated task execution for seamless WhatsApp automation.
 
-> 🔑 **Need a Session ID?** Visit: [**KENTECH Session Generator**](https://kentech-session-generator.vercel.app)
+> 🔑 **Need a Session ID?** Visit: [**Levanter Session Generator**](https://levanter-delta.vercel.app)
 
 ## ✨ Features
 
@@ -34,7 +34,7 @@ Set your preferred language using the `BOT_LANG` variable in `config.env`:
 
 ## 🚀 Quick Deploy
 
-> 🔑 **First Step**: Get your Session ID at [**KENTECH Session Generator**](https://kentech-session-generator.vercel.app)
+> 🔑 **First Step**: Get your Session ID at [**Levanter Session Generator**](https://levanter-delta.vercel.app)
 
 ### ⚡ VPS Deployment (Fastest)
 
