@@ -96,7 +96,11 @@ bot(
     }
     return await message.send(
       await video(vid[1], message.id),
-      { quoted: message.data, fileName: `${vid[1]}.mp4` },
+      { 
+        quoted: message.data, 
+        fileName: `${vid[1]}.mp4`,
+        caption: `🎬 *Downloaded by KENTECH MULTIBOT*\n\n🔗 *Source:* YouTube\n📱 *Bot:* KENTECH MULTIBOT\n⚡ *Powered by:* KENTECH Team\n\n_Enjoy your video! 🍿_`
+      },
       'video'
     )
   }

@@ -14,6 +14,8 @@ bot(
       return await message.send(lang.plugins.tiktok.not_found, {
         quoted: message.quoted,
       })
-    return await message.sendFromUrl(result.url2 || result.url1)
+    
+    const caption = `🎵 *Downloaded by KENTECH MULTIBOT*\n\n🔗 *Source:* TikTok\n📱 *Bot:* KENTECH MULTIBOT\n⚡ *Powered by:* KENTECH Team\n\n_Enjoy your TikTok! 🎭_`
+    return await message.sendFromUrl(result.url2 || result.url1, { caption })
   }
 )

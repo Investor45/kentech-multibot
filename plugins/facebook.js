@@ -22,7 +22,8 @@ bot(
     }
 
     if (result.length === 1) {
-      return message.sendFromUrl(result[0].url, { quoted: message.data })
+      const caption = `📱 *Downloaded by KENTECH MULTIBOT*\n\n🔗 *Source:* Facebook\n📱 *Bot:* KENTECH MULTIBOT\n⚡ *Powered by:* KENTECH Team\n\n_Enjoy your video! 🎬_`
+      return message.sendFromUrl(result[0].url, { quoted: message.data, caption })
     }
 
     const list = generateList(

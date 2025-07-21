@@ -14,6 +14,8 @@ bot(
       return await message.send('*Not found*', {
         quoted: message.quoted,
       })
-    return await message.sendFromUrl(result)
+    
+    const caption = `📁 *Downloaded by KENTECH MULTIBOT*\n\n🔗 *Source:* MediaFire\n📱 *Bot:* KENTECH MULTIBOT\n⚡ *Powered by:* KENTECH Team\n\n_File downloaded successfully! 📥_`
+    return await message.sendFromUrl(result, { caption })
   }
 )

@@ -5,7 +5,7 @@ const QRReader = require('qrcode-reader')
 bot({ pattern: 'qr ?(.*)', desc: lang.plugins.qr.desc, type: 'misc' }, async (message, match) => {
   if (match)
     return await message.sendFromUrl(
-      `https://levanter.onrender.com/gqr?text=${encodeURIComponent(match)}`
+      `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(match)}`
     )
   if (!message.reply_message || !message.reply_message.image)
     return await message.send(lang.plugins.qr.usage)

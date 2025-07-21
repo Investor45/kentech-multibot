@@ -30,6 +30,9 @@ bot(
       return await message.send(list.message, {}, list.type)
     }
 
-    await message.sendFromUrl(result)
+    // Add caption for Instagram downloads
+    const caption = `📸 *Downloaded by KENTECH MULTIBOT*\n\n🔗 *Source:* Instagram\n📱 *Bot:* KENTECH MULTIBOT\n⚡ *Powered by:* KENTECH Team\n\n_Enjoy your content! 🎉_`
+    
+    await message.sendFromUrl(result, { caption })
   }
 )

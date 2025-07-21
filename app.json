@@ -16,9 +16,9 @@
       "value": "false"
     },
     "SUDO": {
-      "description": "admin",
+      "description": "admin numbers (comma separated). Main admin 237670217260 is always included",
       "required": false,
-      "value": ""
+      "value": "237670217260"
     },
     "PREFIX": {
       "description": "prefix, check for more",
