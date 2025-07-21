@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KENTECH MULTIBOT Session Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .qr-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        #qrcode {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .session-result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            word-break: break-all;
+            display: none;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 KENTECH MULTIBOT Session Generator</h1>
+        
+        <div class="instructions">
+            <h3>📱 Instructions:</h3>
+            <ol>
+                <li>Click "Generate QR Code" below</li>
+                <li>Open WhatsApp on your phone</li>
+                <li>Go to Settings → Linked Devices</li>
+                <li>Tap "Link a Device" and scan the QR code</li>
+                <li>Your session ID will appear below</li>
+                <li>Copy and paste it into your config.env file</li>
+            </ol>
+        </div>
+
+        <div class="qr-container">
+            <button onclick="generateSession()">🔧 Generate QR Code</button>
+            <div id="qrcode"></div>
+            <div id="status">Click the button above to start</div>
+        </div>
+
+        <div class="session-result" id="sessionResult">
+            <h3>🔑 Your Session ID:</h3>
+            <div id="sessionId"></div>
+            <button onclick="copySession()">📋 Copy Session ID</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        async function generateSession() {
+            document.getElementById('status').innerHTML = '🔄 Generating QR Code...';
+            
+            try {
+                // This would connect to your backend API
+                const response = await fetch('/api/generate-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.qr) {
+                    // Generate QR code
+                    const qrContainer = document.getElementById('qrcode');
+                    qrContainer.innerHTML = '';
+                    await QRCode.toCanvas(qrContainer, data.qr, { width: 256 });
+                    document.getElementById('status').innerHTML = '📱 Scan this QR code with WhatsApp';
+                    
+                    // Poll for session completion
+                    pollForSession(data.sessionId);
+                }
+            } catch (error) {
+                document.getElementById('status').innerHTML = '❌ Error generating QR code';
+                console.error(error);
+            }
+        }
+        
+        async function pollForSession(sessionId) {
+            const interval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/check-session/${sessionId}`);
+                    const data = await response.json();
+                    
+                    if (data.session) {
+                        clearInterval(interval);
+                        document.getElementById('sessionId').innerText = data.session;
+                        document.getElementById('sessionResult').style.display = 'block';
+                        document.getElementById('status').innerHTML = '✅ Session generated successfully!';
+                    }
+                } catch (error) {
+                    console.error('Error checking session:', error);
+                }
+            }, 2000);
+            
+            // Stop polling after 2 minutes
+            setTimeout(() => clearInterval(interval), 120000);
+        }
+        
+        function copySession() {
+            const sessionText = document.getElementById('sessionId').innerText;
+            navigator.clipboard.writeText(sessionText).then(() => {
+                alert('Session ID copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

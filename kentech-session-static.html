@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KENTECH Session Generator - Static</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #ddd;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">KENTECH</div>
+        <div class="subtitle">Session Generator - Static Version</div>
+        
+        <div class="warning">
+            <strong>⚠️ Notice:</strong> This is a simplified static version. For full functionality with real session generation, please use our server-based version.
+        </div>
+
+        <div class="qr-container" id="qrContainer">
+            <div style="color: #999; font-size: 1.2rem;">
+                📱 QR Code will appear here
+            </div>
+            <div style="margin-top: 10px; color: #666;">
+                Click "Generate Sample QR" below
+            </div>
+        </div>
+
+        <button class="btn" onclick="generateSampleQR()">📱 Generate Sample QR</button>
+        <button class="btn" onclick="downloadInstructions()">📋 Download Instructions</button>
+
+        <div class="info">
+            <strong>ℹ️ Instructions:</strong><br>
+            1. Scan the QR code with WhatsApp Web<br>
+            2. Copy the session data that appears<br>
+            3. Use it in your KENTECH MULTIBOT config<br><br>
+            <strong>For real session generation:</strong><br>
+            Deploy the full version with server backend
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        function generateSampleQR() {
+            const sampleData = `kentech_sample_${Date.now()}`;
+            const qrContainer = document.getElementById('qrContainer');
+            
+            qrContainer.innerHTML = '<div style="color: #999;">Generating QR Code...</div>';
+            
+            setTimeout(() => {
+                QRCode.toCanvas(sampleData, { width: 200, margin: 2 }, function (error, canvas) {
+                    if (error) {
+                        qrContainer.innerHTML = '<div style="color: red;">Error generating QR code</div>';
+                        return;
+                    }
+                    
+                    qrContainer.innerHTML = '';
+                    canvas.style.borderRadius = '10px';
+                    qrContainer.appendChild(canvas);
+                    
+                    const instructions = document.createElement('div');
+                    instructions.style.marginTop = '15px';
+                    instructions.style.fontSize = '0.9rem';
+                    instructions.style.color = '#666';
+                    instructions.innerHTML = '📱 This is a sample QR code<br>For real session, use the full version';
+                    qrContainer.appendChild(instructions);
+                });
+            }, 1000);
+        }
+
+        function downloadInstructions() {
+            const instructions = `KENTECH MULTIBOT - Session Setup Instructions
+
+1. GETTING REAL SESSION ID:
+   - Deploy the full session generator with server backend
+   - Scan QR code with WhatsApp Web
+   - Copy the generated session ID
+
+2. CONFIGURING YOUR BOT:
+   - Open config.env file
+   - Replace "YOUR_ACTUAL_SESSION_ID_HERE" with your real session ID
+   - Save the file
+
+3. STARTING YOUR BOT:
+   - Run: node index.js
+   - Your bot should connect to WhatsApp
+
+4. TESTING:
+   - Send .ping to your bot
+   - If it responds, setup is complete!
+
+Need help? Check the documentation or GitHub repository.
+
+Generated by KENTECH Session Generator
+${new Date().toISOString()}`;
+
+            const blob = new Blob([instructions], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'kentech-session-instructions.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Auto-generate sample QR on load
+        setTimeout(generateSampleQR, 1000);
+    </script>
+</body>
+</html>
