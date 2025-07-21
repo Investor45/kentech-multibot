@@ -1,7 +1,7 @@
 {
   "name": "KENTECH MULTIBOT",
-  "description": "",
-  "keywords": ["noedjs"],
+  "description": "Powerful WhatsApp bot with multi-session support, advanced automation, and extensive customization options",
+  "keywords": ["nodejs", "whatsapp", "bot", "automation", "baileys", "kentech"],
   "success_url": "/",
   "stack": "container",
   "env": {
