@@ -3,8 +3,11 @@
 [![Deploy](https://img.shields.io/badge/Deploy-Now-brightgreen)](https://kentech-session-generator.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org)
+[![Session Generator](https://img.shields.io/badge/Get%20Session%20ID-Click%20Here-orange)](https://kentech-session-generator.vercel.app)
 
 **KENTECH MULTIBOT** is a powerful and feature-rich WhatsApp bot built with Node.js and Baileys. It supports multiple sessions, customizable responses, and automated task execution for seamless WhatsApp automation.
+
+> 🔑 **Need a Session ID?** Visit: [**KENTECH Session Generator**](https://kentech-session-generator.vercel.app)
 
 ## ✨ Features
 
@@ -31,6 +34,8 @@ Set your preferred language using the `BOT_LANG` variable in `config.env`:
 
 ## 🚀 Quick Deploy
 
+> 🔑 **First Step**: Get your Session ID at [**KENTECH Session Generator**](https://kentech-session-generator.vercel.app)
+
 ### ⚡ VPS Deployment (Fastest)
 
 **One-command deployment for VPS/Server:**
@@ -47,11 +52,17 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/
 
 ### 1️⃣ Generate Session ID
 
-Visit our session generator: **[KENTECH Session Generator](https://kentech-session-generator.vercel.app)**
+🔑 **Get your WhatsApp Session ID:** **[KENTECH Session Generator](https://kentech-session-generator.vercel.app)**
 
-1. Click "Generate QR Code"
-2. Scan with WhatsApp (Settings → Linked Devices → Link a Device)
-3. Copy the generated session ID
+**📱 How to get your session:**
+
+1. **Visit**: [https://kentech-session-generator.vercel.app](https://kentech-session-generator.vercel.app)
+2. **Choose deployment option** or **manual session generation**
+3. **For manual setup**: Run `node generate-session.js` in your server
+4. **Scan QR code** with WhatsApp (Settings → Linked Devices → Link a Device)
+5. **Copy your session ID** - keep it private and secure!
+
+> ⚠️ **Important**: Your session ID is like a password - never share it publicly!
 
 ### 2️⃣ Deploy on Heroku
 
