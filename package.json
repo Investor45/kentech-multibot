@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "audio-decode": "^2.2.2",
-    "axios": "^1.3.3",
+    "axios": "^1.10.0",
     "baileys": "git+https://lyfe00011-admin@bitbucket.org/lyfe00011/baileys.git",
     "browser-id3-writer": "^4.4.0",
     "cheerio": "^1.0.0-rc.10",
@@ -34,6 +34,7 @@
     "node-webpmux": "^3.1.4",
     "pdfkit": "^0.13.0",
     "pg": "^8.7.3",
+    "pino": "^9.7.0",
     "pino-pretty": "^9.1.1",
     "pm2": "^6.0.8",
     "qrcode-reader": "^1.0.4",
