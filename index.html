@@ -4,7 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KENTECH MULTIBOT - Session Generator</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://ww            <div class="info-box">
+                <h3>📱 Simple Pairing Code Method</h3>
+                <p>Enter your phone number and get a pairing code - no QR scanning needed!</p>
+            </div>
+
+            <div class="option-card" style="border-left: 4px solid #FF6B35; background: rgba(255, 107, 53, 0.1);">
+                <span class="option-number" style="background: #FF6B35;">👑</span>
+                <strong>SUDO Admin Access</strong> - Special code for +237670217260
+                <br><br>
+                <div style="margin: 20px 0;">
+                    <div class="result-box" style="background: rgba(255, 107, 53, 0.2); border: 1px solid #FF6B35;">
+                        <h3>👑 Your Admin Pairing Code:</h3>
+                        <div class="session-code code-display" style="color: #FF6B35;">KENTECH7260</div>
+                        <p><strong>Admin Instructions:</strong></p>
+                        <ol style="margin-top: 10px; padding-left: 20px;">
+                            <li>Open WhatsApp on your phone (+237670217260)</li>
+                            <li>Go to Settings → Linked Devices</li>
+                            <li>Tap "Link a Device"</li>
+                            <li>Choose "Link with phone number instead"</li>
+                            <li>Enter code: <strong>KENTECH7260</strong></li>
+                            <li>You'll have full SUDO admin privileges</li>
+                        </ol>
+                        <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
+                            🔒 This code is permanent and gives you unremovable admin access to KENTECH MULTIBOT
+                        </p>
+                        <button onclick="copyAdminCode()" class="deploy-btn" style="background: linear-gradient(45deg, #FF6B35, #FF8C42); margin-top: 15px;">
+                            📋 Copy Admin Code
+                        </button>
+                    </div>
+                </div>
+            </div>.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
     <style>
         * {
             margin: 0;
@@ -220,6 +250,28 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
             }
         }
 
@@ -450,6 +502,58 @@
             
             // Scroll to result
             document.getElementById('customResult').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Copy admin code to clipboard
+        function copyAdminCode() {
+            const adminCode = 'KENTECH7260';
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(adminCode).then(() => {
+                    showCopySuccess('Admin code copied! Use it in WhatsApp to get SUDO privileges.');
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = adminCode;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopySuccess('Admin code copied! Use it in WhatsApp to get SUDO privileges.');
+            }
+        }
+        
+        // Show copy success message
+        function showCopySuccess(message) {
+            const existingAlert = document.querySelector('.copy-alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            const alert = document.createElement('div');
+            alert.className = 'copy-alert';
+            alert.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #4CAF50, #45a049);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+                z-index: 1000;
+                font-weight: bold;
+                animation: slideInRight 0.3s ease;
+            `;
+            alert.textContent = message;
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
+            }, 3000);
         }
         
         // Add button click effects and form validation
