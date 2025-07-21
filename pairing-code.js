@@ -62,18 +62,30 @@ async function generatePairingCode() {
     }
     
     const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
-    const { version, isLatest } = await fetchLatestBaileysVersion();
+    
+    // Get latest version info
+    let version, isLatest;
+    try {
+        const versionInfo = await fetchLatestBaileysVersion();
+        version = versionInfo.version;
+        isLatest = versionInfo.isLatest;
+    } catch (error) {
+        console.log('⚠️ Could not fetch latest version, using default...');
+        version = [2, 3000, 1014901307];
+    }
     
     const sock = makeWASocket({
         version,
         logger: logger,
         printQRInTerminal: false,
-        auth: {
-            creds: state.creds,
-            keys: state.keys,
-        },
+        auth: state,
         browser: ['KENTECH MULTIBOT', 'Desktop', '1.0.0'],
+        connectTimeoutMs: 60000,
+        defaultQueryTimeoutMs: 0,
+        keepAliveIntervalMs: 10000,
         generateHighQualityLinkPreview: true,
+        syncFullHistory: false,
+        markOnlineOnConnect: true,
     });
     
     if (!sock.authState.creds.registered) {
@@ -94,10 +106,30 @@ async function generatePairingCode() {
             console.log(`5. Enter this code: ${code}`);
             console.log();
             console.log('⏳ Waiting for you to enter the code in WhatsApp...');
+            console.log('💡 This may take up to 2 minutes...');
         } catch (error) {
-            console.log('❌ Error generating pairing code:', error.message);
-            rl.close();
-            process.exit(1);
+            console.log('❌ Error generating pairing code:', error.message || error);
+            
+            // Try a different approach if the first fails
+            if (error.message && error.message.includes('Connection Closed')) {
+                console.log('🔄 Retrying with different configuration...');
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                try {
+                    const retryCode = await sock.requestPairingCode(phoneNumber);
+                    console.log('\n🔑 YOUR PAIRING CODE (RETRY):');
+                    console.log('========================');
+                    console.log(`📲 ${retryCode}`);
+                    console.log('========================');
+                } catch (retryError) {
+                    console.log('❌ Retry failed:', retryError.message || retryError);
+                    rl.close();
+                    process.exit(1);
+                }
+            } else {
+                rl.close();
+                process.exit(1);
+            }
         }
     }
     
@@ -108,11 +140,12 @@ async function generatePairingCode() {
             const shouldReconnect = (lastDisconnect?.error && (lastDisconnect.error instanceof Boom)) ? 
                 lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut : true;
             
-            if (shouldReconnect) {
+            if (shouldReconnect && lastDisconnect?.error?.output?.statusCode !== DisconnectReason.restartRequired) {
                 console.log('🔄 Connection lost, retrying...');
+                await new Promise(resolve => setTimeout(resolve, 5000));
                 generatePairingCode();
             } else {
-                console.log('❌ Connection closed. You are logged out.');
+                console.log('❌ Connection closed permanently.');
                 rl.close();
                 process.exit(0);
             }
@@ -120,6 +153,9 @@ async function generatePairingCode() {
             console.log('✅ Successfully connected to WhatsApp!');
             
             try {
+                // Wait a moment for the connection to stabilize
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
                 // Read the credentials file
                 const credsPath = path.join(sessionDir, 'creds.json');
                 if (fs.existsSync(credsPath)) {
@@ -149,6 +185,8 @@ async function generatePairingCode() {
             rl.close();
             sock.end();
             process.exit(0);
+        } else if (connection === 'connecting') {
+            console.log('🔗 Connecting to WhatsApp...');
         }
     });
     
