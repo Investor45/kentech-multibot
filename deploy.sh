@@ -137,7 +137,14 @@ clone_repository() {
 # Install bot dependencies
 install_bot_dependencies() {
     print_message "Installing bot dependencies..."
-    yarn install
+    
+    # Configure git to use HTTPS instead of SSH for GitHub
+    git config --global url."https://github.com/".insteadOf git@github.com:
+    git config --global url."https://".insteadOf git://
+    
+    # Install with legacy peer deps to avoid conflicts
+    yarn install --ignore-scripts
+    
     print_message "Bot dependencies installed!"
 }
 
