@@ -84,7 +84,7 @@ install_nodejs() {
 # Install system dependencies
 install_dependencies() {
     print_message "Installing system dependencies..."
-    sudo apt install git ffmpeg wget curl build-essential -y
+    sudo apt install git ffmpeg wget curl build-essential python3 make g++ -y
     print_message "System dependencies installed!"
 }
 
@@ -149,6 +149,14 @@ install_bot_dependencies() {
     # Install dependencies with npm instead of yarn to avoid SSH issues
     print_info "Installing with npm to avoid SSH dependency issues..."
     npm install --legacy-peer-deps
+    
+    # Rebuild sqlite3 to fix native binding issues
+    print_info "Rebuilding sqlite3 for Node.js compatibility..."
+    npm rebuild sqlite3 || {
+        print_warning "sqlite3 rebuild failed, trying alternative installation..."
+        npm uninstall sqlite3
+        npm install sqlite3@5.1.6 --legacy-peer-deps
+    }
     
     print_message "Bot dependencies installed!"
 }

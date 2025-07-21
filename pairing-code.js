@@ -88,7 +88,7 @@ async function generatePairingCode() {
         markOnlineOnConnect: true,
     });
     
-    if (!sock.authState.creds.registered) {
+async function generatePairingCode(retryCount = 0) {
         console.log('📱 Requesting pairing code...');
         
         try {
