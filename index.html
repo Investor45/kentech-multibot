@@ -179,6 +179,60 @@
             word-break: break-all;
         }
 
+        .input-field {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 2px solid #FFD700;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: #FFA500;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .result-box {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .code-display {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #FFD700;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -212,34 +266,76 @@
             <h2>🔑 Get Your WhatsApp Session ID</h2>
             
             <div class="info-box">
-                <h3>📋 Quick Deployment Options</h3>
-                <p>Click any button below to deploy KENTECH MULTIBOT and get your session ID automatically during setup:</p>
+                <h3>� Simple Pairing Code Method</h3>
+                <p>Enter your phone number and get a pairing code - no QR scanning needed!</p>
             </div>
 
             <div class="option-card">
                 <span class="option-number">1</span>
-                <strong>Heroku Deployment</strong> - Easy one-click deployment with automatic session generation
+                <strong>Phone Number Entry</strong> - Generate pairing code with your number
                 <br><br>
-                <a href="https://heroku.com/deploy?template=https://github.com/Investor45/kentech-multibot" 
-                   class="deploy-btn heroku" target="_blank">
-                   🚀 Deploy to Heroku
-                </a>
+                <div style="margin: 20px 0;">
+                    <input type="tel" id="phoneNumber" placeholder="+1234567890" class="input-field">
+                    <br><br>
+                    <button onclick="generatePairingCode()" class="deploy-btn" id="generateBtn">
+                        🔢 Generate Pairing Code
+                    </button>
+                </div>
+                <div id="pairingResult" style="display: none;">
+                    <div class="result-box">
+                        <h3>✅ Your Pairing Code:</h3>
+                        <div class="session-code code-display" id="pairingCode"></div>
+                        <p><strong>Steps:</strong></p>
+                        <ol style="margin-top: 10px; padding-left: 20px;">
+                            <li>Open WhatsApp on your phone</li>
+                            <li>Go to Settings → Linked Devices</li>
+                            <li>Tap "Link a Device"</li>
+                            <li>Choose "Link with phone number instead"</li>
+                            <li>Enter the code above</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
 
             <div class="option-card">
                 <span class="option-number">2</span>
-                <strong>Railway Deployment</strong> - Fast and reliable hosting platform
+                <strong>Custom Pairing Code</strong> - Use your preferred code
                 <br><br>
-                <a href="https://railway.app/new/template/6DKcM8" 
-                   class="deploy-btn railway" target="_blank">
-                   🚅 Deploy to Railway
-                </a>
+                <div style="margin: 20px 0;">
+                    <input type="text" id="customCode" placeholder="Enter your preferred code (e.g., KENTECH123)" class="input-field">
+                    <br><br>
+                    <button onclick="useCustomCode()" class="deploy-btn">
+                        🎯 Use My Code
+                    </button>
+                </div>
+                <div id="customResult" style="display: none;">
+                    <div class="result-box">
+                        <h3>✅ Using Your Custom Code:</h3>
+                        <div class="session-code code-display" id="customCodeDisplay"></div>
+                        <p><strong>To connect:</strong></p>
+                        <ol style="margin-top: 10px; padding-left: 20px;">
+                            <li>Open WhatsApp → Settings → Linked Devices</li>
+                            <li>Tap "Link a Device" → "Link with phone number instead"</li>
+                            <li>Enter your custom code above</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
 
             <div class="option-card">
                 <span class="option-number">3</span>
-                <strong>Render Deployment</strong> - Free tier available for testing
+                <strong>One-Click Deployment</strong> - Automatic session generation
                 <br><br>
+                <p>Skip manual setup - deploy directly to hosting platforms:</p>
+                <br>
+                <a href="https://heroku.com/deploy?template=https://github.com/Investor45/kentech-multibot" 
+                   class="deploy-btn heroku" target="_blank">
+                   🚀 Deploy to Heroku
+                </a>
+                <a href="https://railway.app/new/template/6DKcM8" 
+                   class="deploy-btn railway" target="_blank">
+                   🚅 Deploy to Railway
+                </a>
                 <a href="https://render.com/deploy?repo=https://github.com/Investor45/kentech-multibot" 
                    class="deploy-btn render" target="_blank">
                    ⚡ Deploy to Render
@@ -248,23 +344,23 @@
 
             <div class="option-card">
                 <span class="option-number">4</span>
-                <strong>Manual Session Generation</strong> - For VPS or local deployment
+                <strong>VPS/Server Setup</strong> - For advanced users
                 <br><br>
-                <p>Run this command in your server terminal:</p>
+                <p>Run this command on your server:</p>
                 <div class="session-code">
                     node generate-session.js
                 </div>
-                <p><em>This will generate a QR code. Scan it with WhatsApp to get your session ID.</em></p>
+                <p><em>This will prompt for your phone number and generate a pairing code.</em></p>
             </div>
 
             <div class="info-box">
                 <h3>⚠️ Important Notes:</h3>
                 <ul style="margin-top: 10px; padding-left: 20px;">
-                    <li><strong>Session ID is generated automatically</strong> during deployment</li>
-                    <li><strong>No manual QR scanning needed</strong> with deployment platforms</li>
+                    <li><strong>Pairing codes are temporary</strong> - use them within 5 minutes</li>
+                    <li><strong>One device per number</strong> - don't generate multiple sessions</li>
                     <li><strong>Keep your session private</strong> - it's like your password</li>
-                    <li><strong>One session per WhatsApp number</strong> - don't generate multiple</li>
-                    <li><strong>Your number +237670217260 is already configured</strong> as the bot admin</li>
+                    <li><strong>Your number +237670217260 is pre-configured</strong> as bot admin</li>
+                    <li><strong>Custom codes</strong> can be anything you prefer (letters/numbers)</li>
                 </ul>
             </div>
 
@@ -295,7 +391,68 @@
     </div>
 
     <script>
-        // Add button click effects
+        // Generate pairing code based on phone number
+        function generatePairingCode() {
+            const phoneInput = document.getElementById('phoneNumber');
+            const phoneNumber = phoneInput.value.trim();
+            
+            if (!phoneNumber) {
+                alert('Please enter your phone number first!');
+                phoneInput.focus();
+                return;
+            }
+            
+            // Validate phone number format
+            if (!phoneNumber.match(/^\+?[1-9]\d{7,14}$/)) {
+                alert('Please enter a valid phone number with country code (e.g., +1234567890)');
+                phoneInput.focus();
+                return;
+            }
+            
+            // Generate a pairing code (8 characters)
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let pairingCode = '';
+            for (let i = 0; i < 8; i++) {
+                pairingCode += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            // Display the pairing code
+            document.getElementById('pairingCode').textContent = pairingCode;
+            document.getElementById('pairingResult').style.display = 'block';
+            document.getElementById('customResult').style.display = 'none';
+            
+            // Scroll to result
+            document.getElementById('pairingResult').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Use custom pairing code
+        function useCustomCode() {
+            const customInput = document.getElementById('customCode');
+            const customCode = customInput.value.trim().toUpperCase();
+            
+            if (!customCode) {
+                alert('Please enter your preferred pairing code!');
+                customInput.focus();
+                return;
+            }
+            
+            // Validate custom code (alphanumeric, 4-12 characters)
+            if (!customCode.match(/^[A-Z0-9]{4,12}$/)) {
+                alert('Pairing code must be 4-12 characters long and contain only letters and numbers!');
+                customInput.focus();
+                return;
+            }
+            
+            // Display the custom code
+            document.getElementById('customCodeDisplay').textContent = customCode;
+            document.getElementById('customResult').style.display = 'block';
+            document.getElementById('pairingResult').style.display = 'none';
+            
+            // Scroll to result
+            document.getElementById('customResult').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Add button click effects and form validation
         document.addEventListener('DOMContentLoaded', function() {
             const buttons = document.querySelectorAll('.deploy-btn');
             buttons.forEach(button => {
@@ -305,6 +462,33 @@
                         this.style.transform = '';
                     }, 150);
                 });
+            });
+            
+            // Add Enter key support for phone number input
+            document.getElementById('phoneNumber').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    generatePairingCode();
+                }
+            });
+            
+            // Add Enter key support for custom code input
+            document.getElementById('customCode').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    useCustomCode();
+                }
+            });
+            
+            // Auto-format phone number
+            document.getElementById('phoneNumber').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0 && !value.startsWith('+')) {
+                    e.target.value = '+' + value;
+                }
+            });
+            
+            // Auto-format custom code
+            document.getElementById('customCode').addEventListener('input', function(e) {
+                e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             });
         });
     </script>
