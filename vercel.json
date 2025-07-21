@@ -3,18 +3,18 @@
   "public": true,
   "builds": [
     {
-      "src": "index.html",
+      "src": "simple-session.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/",
-      "dest": "/index.html"
+      "dest": "/simple-session.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/simple-session.html"
     }
   ]
 }

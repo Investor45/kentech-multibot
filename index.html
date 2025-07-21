@@ -74,15 +74,25 @@
             margin-bottom: 30px;
         }
 
-        .step {
+        .info-box {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #FFC107;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .option-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             padding: 25px;
             margin: 20px 0;
             border-left: 4px solid #FFD700;
+            text-align: left;
         }
 
-        .step-number {
+        .option-number {
             display: inline-block;
             width: 30px;
             height: 30px;
@@ -95,63 +105,40 @@
             margin-right: 15px;
         }
 
-        .generate-btn {
+        .deploy-btn {
             background: linear-gradient(45deg, #FFD700, #FFA500);
             color: #333;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 15px 30px;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-            margin: 20px 10px;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .generate-btn:hover {
+        .deploy-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
         }
 
-        .qr-container {
-            display: none;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .qr-code {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px auto;
-            display: inline-block;
-        }
-
-        .session-output {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            word-break: break-all;
-            font-family: 'Courier New', monospace;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .copy-btn {
-            background: #4CAF50;
+        .deploy-btn.heroku {
+            background: linear-gradient(45deg, #6762A6, #9B59B6);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s ease;
         }
 
-        .copy-btn:hover {
-            background: #45a049;
-            transform: translateY(-1px);
+        .deploy-btn.railway {
+            background: linear-gradient(45deg, #0B0D0F, #1A1D23);
+            color: white;
+        }
+
+        .deploy-btn.render {
+            background: linear-gradient(45deg, #46E3B7, #59C9A5);
+            color: #333;
         }
 
         .footer {
@@ -182,29 +169,14 @@
             transform: translateY(-2px);
         }
 
-        .warning {
-            background: rgba(255, 193, 7, 0.2);
-            border: 1px solid #FFC107;
+        .session-code {
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             padding: 15px;
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .success {
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid #4CAF50;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        .error {
-            background: rgba(244, 67, 54, 0.2);
-            border: 1px solid #f44336;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            word-break: break-all;
         }
 
         @media (max-width: 768px) {
@@ -220,31 +192,11 @@
                 font-size: 2rem;
             }
             
-            .generate-btn {
-                padding: 12px 30px;
+            .deploy-btn {
+                padding: 12px 25px;
                 font-size: 1rem;
+                margin: 5px;
             }
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid #FFD700;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -253,246 +205,99 @@
         <div class="header">
             <div class="logo">🤖</div>
             <h1 class="title">KENTECH MULTIBOT</h1>
-            <p class="subtitle">WhatsApp Session Generator</p>
+            <p class="subtitle">Get Your Session ID</p>
         </div>
 
         <div class="main-card">
-            <h2>Generate Your WhatsApp Session ID</h2>
-            <p>Follow these simple steps to get your bot session:</p>
-
-            <div class="step">
-                <span class="step-number">1</span>
-                <strong>Click Generate QR Code</strong> - A QR code will appear below
+            <h2>🔑 Get Your WhatsApp Session ID</h2>
+            
+            <div class="info-box">
+                <h3>📋 Quick Deployment Options</h3>
+                <p>Click any button below to deploy KENTECH MULTIBOT and get your session ID automatically during setup:</p>
             </div>
 
-            <div class="step">
-                <span class="step-number">2</span>
-                <strong>Open WhatsApp</strong> - Go to Settings > Linked Devices > Link a Device
+            <div class="option-card">
+                <span class="option-number">1</span>
+                <strong>Heroku Deployment</strong> - Easy one-click deployment with automatic session generation
+                <br><br>
+                <a href="https://heroku.com/deploy?template=https://github.com/Investor45/kentech-multibot" 
+                   class="deploy-btn heroku" target="_blank">
+                   🚀 Deploy to Heroku
+                </a>
             </div>
 
-            <div class="step">
-                <span class="step-number">3</span>
-                <strong>Scan QR Code</strong> - Point your phone camera at the QR code
+            <div class="option-card">
+                <span class="option-number">2</span>
+                <strong>Railway Deployment</strong> - Fast and reliable hosting platform
+                <br><br>
+                <a href="https://railway.app/new/template/6DKcM8" 
+                   class="deploy-btn railway" target="_blank">
+                   🚅 Deploy to Railway
+                </a>
             </div>
 
-            <div class="step">
-                <span class="step-number">4</span>
-                <strong>Copy Session ID</strong> - Once connected, copy the generated session ID
+            <div class="option-card">
+                <span class="option-number">3</span>
+                <strong>Render Deployment</strong> - Free tier available for testing
+                <br><br>
+                <a href="https://render.com/deploy?repo=https://github.com/Investor45/kentech-multibot" 
+                   class="deploy-btn render" target="_blank">
+                   ⚡ Deploy to Render
+                </a>
             </div>
 
-            <div class="warning">
-                <strong>⚠️ Important:</strong>
+            <div class="option-card">
+                <span class="option-number">4</span>
+                <strong>Manual Session Generation</strong> - For VPS or local deployment
+                <br><br>
+                <p>Run this command in your server terminal:</p>
+                <div class="session-code">
+                    node generate-session.js
+                </div>
+                <p><em>This will generate a QR code. Scan it with WhatsApp to get your session ID.</em></p>
+            </div>
+
+            <div class="info-box">
+                <h3>⚠️ Important Notes:</h3>
                 <ul style="margin-top: 10px; padding-left: 20px;">
-                    <li>Keep your session ID private and secure</li>
-                    <li>Don't share it with anyone</li>
-                    <li>Use it only for your KENTECH MULTIBOT deployment</li>
-                    <li>Generate a new one if compromised</li>
+                    <li><strong>Session ID is generated automatically</strong> during deployment</li>
+                    <li><strong>No manual QR scanning needed</strong> with deployment platforms</li>
+                    <li><strong>Keep your session private</strong> - it's like your password</li>
+                    <li><strong>One session per WhatsApp number</strong> - don't generate multiple</li>
+                    <li><strong>Your number +237670217260 is already configured</strong> as the bot admin</li>
                 </ul>
             </div>
 
-            <button class="generate-btn" onclick="generateSession()">🔄 Generate QR Code</button>
-            <button class="generate-btn" onclick="clearSession()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a52);">🗑️ Clear Session</button>
-
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>Initializing session generator...</p>
-            </div>
-
-            <div class="qr-container" id="qrContainer">
-                <h3>📱 Scan this QR Code with WhatsApp</h3>
-                <div class="qr-code" id="qrCode"></div>
-                <p style="margin-top: 15px;">Keep this page open until the session ID appears below</p>
-            </div>
-
-            <div id="sessionResult" style="display: none;">
-                <div class="success">
-                    <h3>✅ Session Generated Successfully!</h3>
-                    <p>Your session ID is ready. Copy it and use it in your bot deployment.</p>
-                </div>
-                <div class="session-output" id="sessionOutput"></div>
-                <button class="copy-btn" onclick="copySession()">📋 Copy Session ID</button>
-            </div>
-
-            <div id="errorResult" style="display: none;">
-                <div class="error">
-                    <h3>❌ Session Generation Failed</h3>
-                    <p id="errorMessage">Something went wrong. Please try again.</p>
-                </div>
+            <div style="margin-top: 30px;">
+                <h3>🛠️ Alternative: Manual Setup</h3>
+                <p>If you prefer to deploy manually on your own VPS:</p>
+                <br>
+                <a href="https://github.com/Investor45/kentech-multibot/blob/master/VPS-QUICK-DEPLOY.md" 
+                   class="deploy-btn" target="_blank">
+                   📖 VPS Setup Guide
+                </a>
+                <a href="https://github.com/Investor45/kentech-multibot" 
+                   class="deploy-btn" target="_blank">
+                   📂 GitHub Repository
+                </a>
             </div>
         </div>
 
         <div class="footer">
             <p>🚀 Powered by KENTECH Team</p>
             <div class="links">
-                <a href="https://github.com/Investor45/kentech-multibot" class="link" target="_blank">📂 GitHub Repository</a>
-                <a href="https://t.me/kentechnew" class="link" target="_blank">💬 Support Group</a>
-                <a href="https://kentech-session-generator.vercel.app" class="link">🔄 Refresh Page</a>
+                <a href="https://github.com/Investor45/kentech-multibot" class="link" target="_blank">📂 Repository</a>
+                <a href="https://t.me/kentechnew" class="link" target="_blank">💬 Support</a>
+                <a href="mailto:support@kentech.com" class="link">📧 Contact</a>
             </div>
             <p style="margin-top: 20px; opacity: 0.7;">© 2025 KENTECH MULTIBOT - All Rights Reserved</p>
         </div>
     </div>
 
-    <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script src="https://unpkg.com/@whiskeysockets/baileys@latest/lib/index.js"></script>
     <script>
-        let ws = null;
-        let sessionData = null;
-        let isConnecting = false;
-        let socket = null;
-
-        // Real WhatsApp session generation using Baileys
-        async function generateSession() {
-            if (isConnecting) return;
-            
-            clearPreviousSession();
-            showLoading(true);
-            isConnecting = true;
-
-            try {
-                // Initialize WhatsApp connection
-                const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = await import('https://unpkg.com/@whiskeysockets/baileys@latest/lib/index.js');
-                
-                // Create auth state
-                const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
-                
-                // Create socket connection
-                socket = makeWASocket({
-                    auth: state,
-                    printQRInTerminal: false,
-                    logger: { level: 'silent', child: () => ({ level: 'silent' }) }
-                });
-
-                // Handle QR code
-                socket.ev.on('connection.update', async (update) => {
-                    const { connection, lastDisconnect, qr } = update;
-                    
-                    if (qr) {
-                        displayQRCode(qr);
-                        showLoading(false);
-                    }
-                    
-                    if (connection === 'close') {
-                        const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
-                        if (shouldReconnect) {
-                            showError('Connection closed. Please try again.');
-                        }
-                        isConnecting = false;
-                    } else if (connection === 'open') {
-                        // Successfully connected, generate session
-                        const sessionId = JSON.stringify(state.creds);
-                        sessionData = `KENTECH_MULTIBOT_${Buffer.from(sessionId).toString('base64')}`;
-                        showSessionResult(sessionData);
-                        socket.end();
-                    }
-                });
-
-                // Handle credential updates
-                socket.ev.on('creds.update', saveCreds);
-
-            } catch (error) {
-                console.error('Session generation error:', error);
-                showError('Failed to initialize session generator. Please try refreshing the page.');
-                showLoading(false);
-                isConnecting = false;
-            }
-        }
-
-        function displayQRCode(qrData) {
-            const qrContainer = document.getElementById('qrContainer');
-            const qrCodeDiv = document.getElementById('qrCode');
-            
-            // Clear previous QR code
-            qrCodeDiv.innerHTML = '';
-            
-            // Generate QR code
-            QRCode.toCanvas(qrCodeDiv, qrData, {
-                width: 256,
-                height: 256,
-                color: {
-                    dark: '#000000',
-                    light: '#FFFFFF'
-                }
-            }, function (error) {
-                if (error) {
-                    showError('Failed to generate QR code');
-                } else {
-                    qrContainer.style.display = 'block';
-                }
-            });
-        }
-
-        function showSessionResult(sessionId) {
-            document.getElementById('qrContainer').style.display = 'none';
-            document.getElementById('sessionOutput').textContent = sessionId;
-            document.getElementById('sessionResult').style.display = 'block';
-            document.getElementById('errorResult').style.display = 'none';
-            isConnecting = false;
-        }
-
-        function showError(message) {
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorResult').style.display = 'block';
-            document.getElementById('sessionResult').style.display = 'none';
-            document.getElementById('qrContainer').style.display = 'none';
-            showLoading(false);
-            isConnecting = false;
-        }
-
-        function showLoading(show) {
-            document.querySelector('.loading').style.display = show ? 'block' : 'none';
-        }
-
-        function clearSession() {
-            clearPreviousSession();
-            sessionData = null;
-            if (socket) {
-                socket.end();
-                socket = null;
-            }
-            isConnecting = false;
-        }
-
-        function clearPreviousSession() {
-            document.getElementById('qrContainer').style.display = 'none';
-            document.getElementById('sessionResult').style.display = 'none';
-            document.getElementById('errorResult').style.display = 'none';
-            showLoading(false);
-        }
-
-        function copySession() {
-            if (sessionData) {
-                navigator.clipboard.writeText(sessionData).then(() => {
-                    const btn = document.querySelector('.copy-btn');
-                    const originalText = btn.textContent;
-                    btn.textContent = '✅ Copied!';
-                    btn.style.background = '#4CAF50';
-                    
-                    setTimeout(() => {
-                        btn.textContent = originalText;
-                        btn.style.background = '#4CAF50';
-                    }, 2000);
-                }).catch(() => {
-                    // Fallback for older browsers
-                    const textArea = document.createElement('textarea');
-                    textArea.value = sessionData;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    const btn = document.querySelector('.copy-btn');
-                    btn.textContent = '✅ Copied!';
-                    setTimeout(() => {
-                        btn.textContent = '📋 Copy Session ID';
-                    }, 2000);
-                });
-            }
-        }
-
-        // Add some interactive effects
+        // Add button click effects
         document.addEventListener('DOMContentLoaded', function() {
-            // Add click effect to buttons
-            const buttons = document.querySelectorAll('button');
+            const buttons = document.querySelectorAll('.deploy-btn');
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
                     this.style.transform = 'scale(0.95)';
