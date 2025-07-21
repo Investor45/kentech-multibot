@@ -138,12 +138,17 @@ clone_repository() {
 install_bot_dependencies() {
     print_message "Installing bot dependencies..."
     
-    # Configure git to use HTTPS instead of SSH for GitHub
+    # Configure git to use HTTPS instead of SSH for all Git repositories
     git config --global url."https://github.com/".insteadOf git@github.com:
+    git config --global url."https://github.com/".insteadOf ssh://git@github.com/
     git config --global url."https://".insteadOf git://
     
-    # Install with legacy peer deps to avoid conflicts
-    yarn install --ignore-scripts
+    # Remove existing lock files to avoid conflicts
+    rm -f package-lock.json yarn.lock
+    
+    # Install dependencies with npm instead of yarn to avoid SSH issues
+    print_info "Installing with npm to avoid SSH dependency issues..."
+    npm install --legacy-peer-deps
     
     print_message "Bot dependencies installed!"
 }
