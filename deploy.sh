@@ -252,7 +252,7 @@ After=network.target
 [Service]
 Type=simple
 User=$USER
-WorkingDirectory=$PWD
+WorkingDirectory=$INSTALL_DIR
 ExecStart=$(which node) index.js
 Restart=always
 RestartSec=10
@@ -275,8 +275,8 @@ display_final_info() {
     echo
     print_message "🎉 KENTECH MULTIBOT deployed successfully!"
     echo
-    print_info "Bot installed in: $PWD"
-    print_info "Configuration file: $PWD/config.env"
+    print_info "Bot installed in: $INSTALL_DIR"
+    print_info "Configuration file: $INSTALL_DIR/config.env"
     echo
     print_info "Useful commands:"
     echo "  • Check bot status: pm2 status"
