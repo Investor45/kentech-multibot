@@ -165,9 +165,7 @@ generate_session_id() {
     
     # Run the pairing code generator
     print_message "🚀 Starting WhatsApp pairing process..."
-    node pairing-code.js <<EOF
-$PHONE_NUMBER
-EOF
+    node pairing-code.js "$PHONE_NUMBER"
     
     # Check if session was generated
     if [ -f "session_id.txt" ]; then
