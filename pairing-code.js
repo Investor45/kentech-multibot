@@ -4,6 +4,17 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+// Simple logger to avoid pino dependency issues
+const logger = {
+    level: 'silent',
+    child: () => logger,
+    info: () => {},
+    error: () => {},
+    warn: () => {},
+    debug: () => {},
+    trace: () => {}
+};
+
 // Create readline interface for user input
 const rl = readline.createInterface({
     input: process.stdin,
@@ -55,7 +66,7 @@ async function generatePairingCode() {
     
     const sock = makeWASocket({
         version,
-        logger: { level: 'silent' },
+        logger: logger,
         printQRInTerminal: false,
         auth: {
             creds: state.creds,
