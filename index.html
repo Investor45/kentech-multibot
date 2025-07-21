@@ -333,40 +333,71 @@
     </div>
 
     <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://unpkg.com/@whiskeysockets/baileys@latest/lib/index.js"></script>
     <script>
         let ws = null;
         let sessionData = null;
         let isConnecting = false;
+        let socket = null;
 
-        // Simple session generation - you can enhance this
-        function generateSession() {
+        // Real WhatsApp session generation using Baileys
+        async function generateSession() {
             if (isConnecting) return;
             
             clearPreviousSession();
             showLoading(true);
             isConnecting = true;
 
-            // Simulate QR code generation
-            setTimeout(() => {
-                try {
-                    const qrData = `KENTECH-MULTIBOT-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-                    displayQRCode(qrData);
-                    showLoading(false);
+            try {
+                // Initialize WhatsApp connection
+                const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = await import('https://unpkg.com/@whiskeysockets/baileys@latest/lib/index.js');
+                
+                // Create auth state
+                const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
+                
+                // Create socket connection
+                socket = makeWASocket({
+                    auth: state,
+                    printQRInTerminal: false,
+                    logger: { level: 'silent', child: () => ({ level: 'silent' }) }
+                });
+
+                // Handle QR code
+                socket.ev.on('connection.update', async (update) => {
+                    const { connection, lastDisconnect, qr } = update;
                     
-                    // Simulate session generation after QR scan
-                    setTimeout(() => {
-                        simulateSessionGeneration();
-                    }, 15000); // 15 seconds simulation
+                    if (qr) {
+                        displayQRCode(qr);
+                        showLoading(false);
+                    }
                     
-                } catch (error) {
-                    showError('Failed to generate QR code. Please try again.');
-                    showLoading(false);
-                    isConnecting = false;
-                }
-            }, 2000);
+                    if (connection === 'close') {
+                        const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+                        if (shouldReconnect) {
+                            showError('Connection closed. Please try again.');
+                        }
+                        isConnecting = false;
+                    } else if (connection === 'open') {
+                        // Successfully connected, generate session
+                        const sessionId = JSON.stringify(state.creds);
+                        sessionData = `KENTECH_MULTIBOT_${Buffer.from(sessionId).toString('base64')}`;
+                        showSessionResult(sessionData);
+                        socket.end();
+                    }
+                });
+
+                // Handle credential updates
+                socket.ev.on('creds.update', saveCreds);
+
+            } catch (error) {
+                console.error('Session generation error:', error);
+                showError('Failed to initialize session generator. Please try refreshing the page.');
+                showLoading(false);
+                isConnecting = false;
+            }
         }
 
-        function displayQRCode(data) {
+        function displayQRCode(qrData) {
             const qrContainer = document.getElementById('qrContainer');
             const qrCodeDiv = document.getElementById('qrCode');
             
@@ -374,7 +405,7 @@
             qrCodeDiv.innerHTML = '';
             
             // Generate QR code
-            QRCode.toCanvas(qrCodeDiv, data, {
+            QRCode.toCanvas(qrCodeDiv, qrData, {
                 width: 256,
                 height: 256,
                 color: {
@@ -390,23 +421,12 @@
             });
         }
 
-        function simulateSessionGeneration() {
-            // Generate a realistic-looking session ID
-            const sessionId = 'KENTECH_MULTIBOT_' + Date.now() + '_' + 
-                             Math.random().toString(36).substr(2, 15) + 
-                             Math.random().toString(36).substr(2, 15) + 
-                             Math.random().toString(36).substr(2, 15);
-            
-            sessionData = sessionId;
-            showSessionResult(sessionId);
-            isConnecting = false;
-        }
-
         function showSessionResult(sessionId) {
             document.getElementById('qrContainer').style.display = 'none';
             document.getElementById('sessionOutput').textContent = sessionId;
             document.getElementById('sessionResult').style.display = 'block';
             document.getElementById('errorResult').style.display = 'none';
+            isConnecting = false;
         }
 
         function showError(message) {
@@ -425,6 +445,10 @@
         function clearSession() {
             clearPreviousSession();
             sessionData = null;
+            if (socket) {
+                socket.end();
+                socket = null;
+            }
             isConnecting = false;
         }
 
