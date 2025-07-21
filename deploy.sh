@@ -226,6 +226,11 @@ configure_environment() {
     echo
     print_info "Available languages: en, es, hi, fr, ar, ru, bn, tr, id, ur"
     read -p "Enter bot language [en]: " BOT_LANG
+    BOT_LANG=${BOT_LANG:-en}
+    sed -i "s/BOT_LANG=.*/BOT_LANG=$BOT_LANG/" config.env
+    
+    print_message "✅ Environment configured successfully!"
+}
 
 # Setup PM2
 setup_pm2() {
