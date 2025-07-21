@@ -108,35 +108,30 @@ install_pm2() {
 clone_repository() {
     print_message "Cloning KENTECH MULTIBOT repository..."
     
-    # Get repository URL from user
-    read -p "Enter your GitHub repository URL (e.g., https://github.com/Investor45/kentech-multibot.git): " REPO_URL
+    # Default repository URL
+    REPO_URL="https://github.com/Investor45/kentech-multibot.git"
     
-    if [ -z "$REPO_URL" ]; then
-        print_error "Repository URL is required!"
-        exit 1
-    fi
+    # Default installation directory
+    INSTALL_DIR="/home/$USER/kentech-multibot"
     
-    # Get installation directory
-    read -p "Enter installation directory [/home/$USER/kentech-multibot]: " INSTALL_DIR
-    INSTALL_DIR=${INSTALL_DIR:-"/home/$USER/kentech-multibot"}
+    print_info "Repository: $REPO_URL"
+    print_info "Installation directory: $INSTALL_DIR"
     
     # Remove existing directory if it exists
     if [ -d "$INSTALL_DIR" ]; then
-        print_warning "Directory $INSTALL_DIR already exists."
-        read -p "Do you want to remove it and continue? (y/N): " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            rm -rf "$INSTALL_DIR"
-        else
-            print_error "Deployment cancelled."
-            exit 1
-        fi
+        print_warning "Directory $INSTALL_DIR already exists. Removing..."
+        rm -rf "$INSTALL_DIR"
     fi
     
     # Clone repository
-    git clone "$REPO_URL" "$INSTALL_DIR"
+    print_message "Downloading KENTECH MULTIBOT..."
+    git clone "$REPO_URL" "$INSTALL_DIR" || {
+        print_error "Failed to clone repository. Please check your internet connection."
+        exit 1
+    }
+    
     cd "$INSTALL_DIR"
-    print_message "Repository cloned successfully!"
+    print_message "✅ Repository cloned successfully!"
 }
 
 # Install bot dependencies
@@ -146,11 +141,51 @@ install_bot_dependencies() {
     print_message "Bot dependencies installed!"
 }
 
+# Generate session ID automatically
+generate_session_id() {
+    print_message "🔑 WhatsApp Session ID Generation"
+    echo
+    print_info "To connect your bot to WhatsApp, we need to generate a session ID."
+    print_info "This requires your phone number and a pairing code."
+    echo
+    
+    while [ -z "$PHONE_NUMBER" ]; do
+        read -p "📱 Enter your WhatsApp phone number (with country code, no + sign): " PHONE_NUMBER
+        if [ -z "$PHONE_NUMBER" ]; then
+            print_error "Phone number is required!"
+        elif [ ${#PHONE_NUMBER} -lt 10 ]; then
+            print_error "Please include country code (e.g., 237670217260)"
+            PHONE_NUMBER=""
+        fi
+    done
+    
+    print_message "📞 Generating pairing code for +$PHONE_NUMBER..."
+    print_info "⏳ Please wait..."
+    echo
+    
+    # Run the pairing code generator
+    print_message "🚀 Starting WhatsApp pairing process..."
+    node pairing-code.js <<EOF
+$PHONE_NUMBER
+EOF
+    
+    # Check if session was generated
+    if [ -f "session_id.txt" ]; then
+        SESSION_ID=$(cat session_id.txt)
+        print_message "✅ Session ID generated successfully!"
+        rm -f session_id.txt  # Clean up
+        return 0
+    else
+        print_error "❌ Failed to generate session ID. Please try again."
+        return 1
+    fi
+}
+
 # Configure environment
 configure_environment() {
-    print_message "Configuring environment variables..."
+    print_message "Configuring bot environment..."
     
-    # Copy example config if config.env doesn't exist
+    # Create config.env if it doesn't exist
     if [ ! -f "config.env" ]; then
         if [ -f "config.env.example" ]; then
             cp config.env.example config.env
@@ -161,53 +196,36 @@ configure_environment() {
         fi
     fi
     
-    print_info "Please configure your bot settings:"
+    print_info "🎯 KENTECH MULTIBOT Configuration"
     echo
     
-    # Get session ID - MANDATORY
-    print_info "Session ID is REQUIRED for the bot to work!"
-    print_info "Get your session ID from: https://kentech-session-generator.vercel.app"
-    echo
+    # Generate session ID automatically
+    if ! generate_session_id; then
+        print_error "Session generation failed. Deployment cannot continue."
+        exit 1
+    fi
     
-    while [ -z "$SESSION_ID" ]; do
-        read -p "Enter your WhatsApp Session ID (REQUIRED): " SESSION_ID
-        if [ -z "$SESSION_ID" ]; then
-            print_error "Session ID cannot be empty! The bot will not work without it."
-            print_info "Please visit: https://kentech-session-generator.vercel.app"
-            print_info "Generate a session ID and enter it here."
-            echo
-        elif [ "$SESSION_ID" = "YOUR_ACTUAL_SESSION_ID_HERE" ] || [ "$SESSION_ID" = "kentech_multibot_sessionid" ]; then
-            print_error "Please enter a REAL session ID, not the placeholder!"
-            print_info "Visit: https://kentech-session-generator.vercel.app"
-            print_info "Scan the QR code with WhatsApp and get your actual session ID."
-            SESSION_ID=""
-            echo
-        fi
-    done
-    
+    # Configure session ID
     sed -i "s/SESSION_ID=.*/SESSION_ID=$SESSION_ID/" config.env
-    print_message "Session ID configured successfully!"
-    echo
+    print_message "✅ Session ID configured!"
     
     # Get bot prefix
     read -p "Enter bot prefix [.]: " PREFIX
     PREFIX=${PREFIX:-.}
     sed -i "s/PREFIX=.*/PREFIX=$PREFIX/" config.env
     
-    # Get sudo numbers
-    read -p "Enter admin phone numbers (comma-separated, with country code): " SUDO
+    # Get admin phone numbers
+    print_info "Configure admin users (optional):"
+    read -p "Enter admin phone numbers (comma-separated, with country code) [skip]: " SUDO
     if [ ! -z "$SUDO" ]; then
         sed -i "s/SUDO=.*/SUDO=$SUDO/" config.env
+        print_message "Admin users configured: $SUDO"
     fi
     
     # Get bot language
-    echo "Available languages: en, es, hi, fr, ar, ru, bn, tr, id, ur"
+    echo
+    print_info "Available languages: en, es, hi, fr, ar, ru, bn, tr, id, ur"
     read -p "Enter bot language [en]: " BOT_LANG
-    BOT_LANG=${BOT_LANG:-en}
-    sed -i "s/BOT_LANG=.*/BOT_LANG=$BOT_LANG/" config.env
-    
-    print_message "Environment configured!"
-}
 
 # Setup PM2
 setup_pm2() {

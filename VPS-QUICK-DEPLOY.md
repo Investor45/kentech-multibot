@@ -8,18 +8,21 @@
 bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/master/deploy.sh)
 ```
 
-**This replaces any old deployment scripts and uses YOUR branded KENTECH MULTIBOT!**
+**What happens automatically:**
+1. ✅ **Downloads and installs** all dependencies (Node.js, Yarn, PM2, Git, FFmpeg)
+2. ✅ **Clones your repository** automatically from GitHub
+3. ✅ **Asks for your phone number** (e.g., 237670217260)
+4. ✅ **Generates 8-digit pairing code** automatically
+5. ✅ **You enter code in WhatsApp** (Settings > Linked Devices > Link with phone number)
+6. ✅ **Creates session ID** automatically
+7. ✅ **Configures and starts** your bot with PM2
 
-## ⚠️ IMPORTANT: Session ID Required
+**You only need to provide:**
+- 📱 Your phone number (with country code)
+- � Enter the 8-digit code in WhatsApp
+- ⚙️ Optional: Bot prefix and admin numbers
 
-**Before deploying, you MUST have a valid session ID:**
-
-1. 🚫 **Don't use placeholders** like `YOUR_ACTUAL_SESSION_ID_HERE`
-2. ✅ **Get real session ID** from [KENTECH Session Generator](https://kentech-session-generator.vercel.app)
-3. 📱 **Scan QR code** with WhatsApp Web
-4. 💾 **Copy the generated session ID**
-
-**Without a valid session ID, your bot will NOT work!**
+**No manual cloning, no session generator websites, no complex setup!**
 
 ---
 
@@ -47,33 +50,40 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/
 
 ## 🔧 Deployment Process
 
-### Step 1: Generate Session ID FIRST
-**⚠️ IMPORTANT: Get your session ID before running the deployment!**
-
-1. Visit: **[KENTECH Session Generator](https://kentech-session-generator.vercel.app)**
-2. Generate and copy your session ID
-3. Keep it ready - the deployment script will ask for it
-
-### Step 2: SSH to Your VPS
+### Step 1: SSH to Your VPS
 ```bash
 ssh root@your-vps-ip
 # or
 ssh username@your-vps-ip
 ```
 
-### Step 3: Run the Deployment Command
+### Step 2: Run the One-Command Deployment
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/Investor45/kentech-multibot/master/deploy.sh)
 ```
 
-### Step 4: Follow the Prompts
-The script will ask for:
-- **Session ID**: ⚠️ **REQUIRED** - Enter your real session ID (not placeholder)
-- **Repository URL**: `https://github.com/Investor45/kentech-multibot.git`
-- **Installation Directory**: `/home/username/kentech-multibot` (default)
-- **Bot Prefix**: `.` (default)
-- **Admin Phone Numbers**: Your phone number with country code
-- **Bot Language**: `en` (default)
+### Step 3: Follow the Automated Setup
+The script will automatically:
+1. **Install all dependencies** (Node.js, Yarn, PM2, etc.)
+2. **Download KENTECH MULTIBOT** from GitHub
+3. **Ask for your phone number** (e.g., 237670217260)
+
+### Step 4: Enter Pairing Code in WhatsApp
+1. Script generates **8-digit pairing code** (e.g., 12345678)
+2. Open **WhatsApp** on your phone
+3. Go to **Settings** → **Linked Devices**
+4. Tap **"Link a Device"**
+5. Tap **"Link with phone number instead"** 
+6. **Enter the 8-digit code**
+
+### Step 5: Bot Auto-Configuration
+The script automatically:
+- ✅ Creates your session ID
+- ✅ Configures the bot
+- ✅ Starts with PM2
+- ✅ Sets up firewall
+
+**Total setup time: 5-10 minutes!**
 
 ---
 

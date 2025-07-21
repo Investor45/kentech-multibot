@@ -19,13 +19,17 @@ async function generatePairingCode() {
     console.log('===========================================');
     console.log();
     
-    // Get phone number from user
-    const phoneNumber = await question('📱 Enter your WhatsApp phone number (with country code, no + sign): ');
+    // Get phone number from user input or command line
+    let phoneNumber = process.argv[2];
+    
+    if (!phoneNumber) {
+        phoneNumber = await question('📱 Enter your WhatsApp phone number (with country code, no + sign): ');
+    }
     
     if (!phoneNumber || phoneNumber.length < 10) {
         console.log('❌ Invalid phone number. Please include country code (e.g., 237670217260)');
         rl.close();
-        return;
+        process.exit(1);
     }
     
     console.log(`📞 Generating pairing code for: +${phoneNumber}`);
@@ -82,7 +86,7 @@ async function generatePairingCode() {
         } catch (error) {
             console.log('❌ Error generating pairing code:', error.message);
             rl.close();
-            return;
+            process.exit(1);
         }
     }
     
